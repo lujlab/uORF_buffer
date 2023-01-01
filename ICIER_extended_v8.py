@@ -19,7 +19,7 @@ default_condition_set = {'Ls': 10,
                          'Len_m': 500,  # length between mATG and mSTOP, both ends included
                          'Len_c': 50,  # length after mSTOP
                          'Lambda': 0.1,
-                         # probability of 40S loading in a single action.
+                         # probability of 40S loading in a single action
                          # CAUTION: in the article, the symbol of this parameter is R_in.
                          'P_delay_au': 1,  # probability NOT to delay at au boundary, 1 means no delay
                          'P_delay_ub': 1,  # probability NOT to delay at ub boundary, 1 means no delay
