@@ -18,27 +18,42 @@ default_condition_set = {'Ls': 10,
                          'Len_b': 50,  # length between uSTOP and mATG, both ends not included
                          'Len_m': 500,  # length between mATG and mSTOP, both ends included
                          'Len_c': 50,  # length after mSTOP
-                         'Lambda': 0.1,  # corresponding to R_in in the article
-                         'P_delay_au': 1.1,  # delay at au boundary
-                         'P_delay_ub': 1.1,  # delay at ub boundary
-                         'P_delay_bm': 1.1,  # delay at bm boundary
-                         'P_delay_mc': 1.1,  # delay at mc boundary
+                         'Lambda': 0.1,
+                         # probability of 40S loading in a single action.
+                         # CAUTION: in the article, the symbol of this parameter is R_in.
+                         'P_delay_au': 1,  # probability NOT to delay at au boundary, 1 means no delay
+                         'P_delay_ub': 1,  # probability NOT to delay at ub boundary, 1 means no delay
+                         'P_delay_bm': 1,  # probability NOT to delay at bm boundary, 1 means no delay
+                         'P_delay_mc': 1,  # probability NOT to delay at mc boundary, 1 means no delay
                          'P_s2p_u': 0.1,
-                         # corresponding to I_uORF in the article
+                         # probability of transformation from 40S to 80S at uATG in a single action
+                         # CAUTION: in the article, the symbol of this parameter is I_uORF.
                          # final transforming probability at uATG is P_s2p_u/[1-(1-P_s2p_u)*(1-P_smove)], thus the defualt final probability is 0.2703
-                         'P_p2s_u': 0,  # reinitiation capacity at uSTOP
+                         'P_p2s_u': 0,  # probability of transformation from 80S to 40S at uSTOP in a single action (i.e., reinitiation)
                          'P_s2p_m': 0.9,
-                         # corresponding to I_CDS in the article
+                         # probability of transformation from 40S to 80S at mATG in a single action
+                         # CAUTION: in the article, the symbol of this parameter is I_CDS.
                          # final transforming probability at mATG is P_s2p_m/[1-(1-P_s2p_m)*(1-P_smove)], thus the defualt final probability is 0.9677
-                         'P_p2s_m': 0,  # reinitiation capacity at mSTOP
-                         'P_smove': 0.3,  # corresponding to v_s in the article
-                         'P_pmove_u': 0.3,  # corresponding to v_Eu in the article
-                         'P_pmove_m': 0.5,  # corresponding to v_EC in the article
-                         'P_sdeath': 0,  #  probability of spontaneous 40S dissociation. ONLY happens when a 40S moves.
-                         'P_edeath': 0,   #  probability of spontaneous 80S dissociation. ONLY happens when a 80S moves.
-                         'P_clear_up':0,  # corresponding to K_up in the article
-                         'P_clear_down':1,  # corresponding to K_down in the article
-                         'TTime': 1000000}
+                         'P_p2s_m': 0,  # probability of transformation from 80S to 40S at uSTOP in a single action (i.e., reinitiation)
+                         'P_smove': 0.3,
+                         # probability that a 40S moves to the next position in a single action
+                         # CAUTION: in the article, the symbol of this parameter is v_s.
+                         'P_pmove_u': 0.3,
+                         # probability that a 80S located in uORF moves to the next position in a single action
+                         # CAUTION: in the article, the symbol of this parameter is v_Eu.
+                         'P_pmove_m': 0.5,
+                         # probability that a 80S loacted in mORF moves to the next position in a single action
+                         # CAUTION: in the article, the symbol of this parameter is v_EC.
+                         'P_sdeath': 0,  # probability of spontaneous 40S dissociation. ONLY happens when a 40S moves
+                         'P_edeath': 0,  # probability of spontaneous 80S dissociation. ONLY happens when a 80S moves
+                         'P_clear_up': 0,
+                         # capacity of the 80S to remove the 40S in a 40S->80S collision, 0 means unable and 1 means able
+                         # CAUTION: in the article, the symbol of this parameter is K_up.
+                         'P_clear_down': 1,
+                         # capacity of the 80S to remove the 40S in a 80S->40S collision, 0 means unable and 1 means able
+                         # CAUTION: in the article, the symbol of this parameter is K_down.
+                         'TTime': 1000000  # total number of actions in a single run of simulation
+                         }
 
 
 @jit(nopython=True)
@@ -47,24 +62,24 @@ def Free2go(Path, jstart, Len_rib):
 
 
 @jit(nopython=True)
-def Free2transform(Path, jstart, Len_rib):  # slightly different from the original function Free2go
+def Free2transform(Path, jstart, Len_rib):
     return sum(Path[jstart + 1:jstart + Len_rib])
 
 
 @jit(nopython=True)
 def Want2Jump(j, Path, Len_a, Len_u, Ls, Le, P_smove, P_pmove_u, P_pmove_m, P_clear_up, P_clear_down):
     flag = False
-    if Path[j] == 1  and Path[j + Ls] != 1:
-        P_smove_final = P_smove if Path[j + Ls] == 0 else P_smove*P_clear_up
+    if Path[j] == 1 and Path[j + Ls] != 1:
+        P_smove_final = P_smove if Path[j + Ls] == 0 else P_smove * P_clear_up
         if random.random() < P_smove_final:
             flag = True
     elif Path[j] == 2 and Path[j + Le] < 2:
         if j < Len_a + Len_u:
-            P_pmove_u_final = P_pmove_u if Path[j + Le] == 0 else P_pmove_u*P_clear_down
+            P_pmove_u_final = P_pmove_u if Path[j + Le] == 0 else P_pmove_u * P_clear_down
             if random.random() < P_pmove_u_final:
                 flag = True
         elif j >= Len_a + Len_u:
-            P_pmove_m_final = P_pmove_m if Path[j + Le] == 0 else P_pmove_m*P_clear_down
+            P_pmove_m_final = P_pmove_m if Path[j + Le] == 0 else P_pmove_m * P_clear_down
             if random.random() < P_pmove_m_final:
                 flag = True
     return flag
@@ -122,7 +137,7 @@ def Sim_main(condition_set=None):
     TTime = condition_set['TTime']
     res = Sim_single_set(Ls, Le, Len_a, Len_u, Len_b, Len_m, Len_c, Lambda, P_delay_au, P_delay_ub, P_delay_bm,
                          P_delay_mc, P_s2p_u, P_p2s_u, P_s2p_m, P_p2s_m, P_smove, P_pmove_u, P_pmove_m, P_sdeath,
-                         P_edeath, P_clear_up , P_clear_down, TTime)
+                         P_edeath, P_clear_up, P_clear_down, TTime)
     (SRNA_started, SRNA_passed_au, PRNA_started_u, PRNA_dropped_u, PRNA_finished_u, SRNA_passed_bm, PRNA_started_m,
      PRNA_dropped_m, PRNA_finished_m, SRNA_dropped, SRNA_end, SRNA_kicked_upstream_u, SRNA_kicked_downstream_u,
      SRNA_kicked_upstream_m, SRNA_kicked_downstream_m) = res
@@ -140,7 +155,8 @@ def Sim_main(condition_set=None):
 
 @jit(nopython=True)
 def Sim_single_set(Ls, Le, Len_a, Len_u, Len_b, Len_m, Len_c, Lambda, P_delay_au, P_delay_ub, P_delay_bm, P_delay_mc,
-                   P_s2p_u, P_p2s_u, P_s2p_m, P_p2s_m, P_smove, P_pmove_u, P_pmove_m, P_sdeath, P_edeath, P_clear_up , P_clear_down, TTime):
+                   P_s2p_u, P_p2s_u, P_s2p_m, P_p2s_m, P_smove, P_pmove_u, P_pmove_m, P_sdeath, P_edeath, P_clear_up,
+                   P_clear_down, TTime):
     Len_tot = Len_a + Len_u + Len_b + Len_m + Len_c
 
     # Path = np.zeros(Len_tot, dtype=int)
@@ -198,7 +214,8 @@ def Sim_single_set(Ls, Le, Len_a, Len_u, Len_b, Len_m, Len_c, Lambda, P_delay_au
         Path_new = Path.copy()
 
         for j in range(0, Len_tot - Ls):  # 40S ribosomes moving
-            if Path[j] == 1 and Want2Jump(j, Path, Len_a, Len_u, Ls, Le, P_smove, P_pmove_u, P_pmove_m, P_clear_up, P_clear_down):
+            if Path[j] == 1 and Want2Jump(j, Path, Len_a, Len_u, Ls, Le, P_smove, P_pmove_u, P_pmove_m, P_clear_up,
+                                          P_clear_down):
                 Path_new[j] = 0
                 Path_new[j + 1] = 1
                 if random.random() < P_sdeath:
@@ -207,7 +224,8 @@ def Sim_single_set(Ls, Le, Len_a, Len_u, Len_b, Len_m, Len_c, Lambda, P_delay_au
 
         for j in range(0, Len_tot - Ls):  # 80S ribosomes moving and clearing 40S they run into
             if Path[j] >= 2:
-                if Path[j] == 2 and Want2Jump(j, Path, Len_a, Len_u, Ls, Le, P_smove, P_pmove_u, P_pmove_m, P_clear_up, P_clear_down):
+                if Path[j] == 2 and Want2Jump(j, Path, Len_a, Len_u, Ls, Le, P_smove, P_pmove_u, P_pmove_m, P_clear_up,
+                                              P_clear_down):
                     Path_new[j] = 0
                     Path_new[j + 1] = 2
                     if random.random() < P_edeath:
@@ -238,9 +256,9 @@ def Sim_single_set(Ls, Le, Len_a, Len_u, Len_b, Len_m, Len_c, Lambda, P_delay_au
         Path = Path_new
 
     return (
-    SRNA_started, SRNA_passed_au, PRNA_started_u, PRNA_dropped_u, PRNA_finished_u, SRNA_passed_bm, PRNA_started_m,
-    PRNA_dropped_m, PRNA_finished_m, SRNA_dropped, SRNA_end, SRNA_kicked_upstream_u, SRNA_kicked_downstream_u,
-    SRNA_kicked_upstream_m, SRNA_kicked_downstream_m)
+        SRNA_started, SRNA_passed_au, PRNA_started_u, PRNA_dropped_u, PRNA_finished_u, SRNA_passed_bm, PRNA_started_m,
+        PRNA_dropped_m, PRNA_finished_m, SRNA_dropped, SRNA_end, SRNA_kicked_upstream_u, SRNA_kicked_downstream_u,
+        SRNA_kicked_upstream_m, SRNA_kicked_downstream_m)
 
 
 class Sim_main_mp:
