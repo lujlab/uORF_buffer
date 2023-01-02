@@ -3,14 +3,6 @@ import random
 import datetime
 from numba import jit
 
-# v2: adjusted kicking rules: only when a 80S runs into a 40S AFTER MOVING will it kick the 40S off.
-# v3: output written into stdout in real time.
-# v4: rewrite the loop to run faster, and fix an error that remained in v2 kicking rules.
-# v5: fixed an error of 40S running out of range, and allow 40S to run first.
-# v6: fixed an error of moving determination.
-# v7: imported numba to run much faster.
-# v8: integrated upstream/downstream/double-dissociation model.
-
 default_condition_set = {'Ls': 10,
                          'Le': 10,
                          'Len_a': 50,  # length before uATG
