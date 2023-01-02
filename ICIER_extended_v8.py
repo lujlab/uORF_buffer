@@ -26,7 +26,7 @@ default_condition_set = {'Ls': 10,
                          # probability of transformation from 40S to 80S at mATG in a single action
                          # CAUTION: in the article, the symbol of this parameter is I_CDS.
                          # final transforming probability at mATG is P_s2p_m/[1-(1-P_s2p_m)*(1-P_smove)], thus the defualt final probability is 0.9677
-                         'P_p2s_m': 0,  # probability of transformation from 80S to 40S at uSTOP in a single action (i.e., reinitiation)
+                         'P_p2s_m': 0,  # probability of transformation from 80S to 40S at mSTOP in a single action (i.e., reinitiation)
                          'P_smove': 0.3,
                          # probability that a 40S moves to the next position in a single action
                          # CAUTION: in the article, the symbol of this parameter is v_s.
