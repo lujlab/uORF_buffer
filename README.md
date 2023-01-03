@@ -32,30 +32,30 @@ Sim_multi_condition(condition_list, 'sim_result/1000Lambda_runif__11P_s2p_u__11P
 ```
 Run this script, and we will get the result file at sim_result/1000Lambda_runif__11P_s2p_u__11P_s2p_m__v8_downstream_dissociation.txt, which contains a header line and then 121000 lines of results. Note that the output will also be printed to standard output in real time, and you can either discard it or use it to monitor the progress, etc.
 
-## Colums in the result file
+## Columns in the result file
 The result file is a tab-delimited text file with 40 columns, the first column is the ID of each run, the 2nd to 25th lines (Ls to TTIme) are the parameters of condition that are set in the input dictionaries, and the 26th to 40th lines (SRNA_started to SRNA_kicked_downstream_m) are the actual output values. Here the description of all the columns are listed. **Note that some parameters and values have different symbols in scripts and in the article, while they are actually the same variable.**
 |Column name (symbol in scipts)| Symbol in article|Description|
 |---|---|---|
 |sim_ID||The id of each run. Generated according to system time.|
-|Ls||Length of a 40S ribosome.|
-|Le||Length of an 80S ribosome.|
-|Len_a||Length before uATG.|
-|Len_u||Length between uATG and uSTOP, both ends included.|
-|Len_b||
-|Len_m||
-|Len_c||
-|Lambda|*R<sub>in</sub>*|Probability of 40S loading in a single action.|
-|P_delay_au
-|P_delay_ub
-|P_delay_bm
-|P_delay_mc
-|P_s2p_u
-|P_p2s_u
-|P_s2p_m
-|P_p2s_m
-|P_smove
-|P_pmove_u
-|P_pmove_m
+|Ls||Length of a 40S ribosome.\[Default: 10\]|
+|Le||Length of an 80S ribosome.\[Default: 10\]|
+|Len_a|*Len_a*|Length before uATG. \[Default: 50\]|
+|Len_u|*Len_u*|Length between uATG and uSTOP, both ends included.\[Default: 30\]|
+|Len_b|*Len_b*|Length between uSTOP and mATG, both ends not included.\[Default: 50\]|
+|Len_m|*Len_m*|Length between mATG and mSTOP, both ends included.\[Default: 500\]|
+|Len_c|*Len_c*|Length after mSTOP.\[Default: 50\]|
+|Lambda|*R<sub>in</sub>*|Probability of 40S loading in a single action.\[Default: 0.1\]|
+|P_delay_au||Probability NOT to delay at au boundary in a single action, 1 means no delay.\[Default: 1\]|
+|P_delay_ub||Probability NOT to delay at ub boundary in a single action, 1 means no delay.\[Default: 1\]|
+|P_delay_bm||Probability NOT to delay at bm boundary in a single action, 1 means no delay.\[Default: 1\]|
+|P_delay_mc||Probability NOT to delay at mc boundary in a single action, 1 means no delay.\[Default: 1\]|
+|P_s2p_u|*I<sub>uORF</sub>*|Probability of transformation from 40S to 80S at uATG in a single action.\[Default: 0.1\]|
+|P_p2s_u||Probability of transformation from 80S to 40S at uSTOP in a single action (i.e., reinitiation).\[Default: 0\]|
+|P_s2p_m|*I<sub>CDS</sub>*|Probability of transformation from 40S to 80S at uATG in a single action.\[Default: 0.1\]|
+|P_p2s_m||Probability of transformation from 80S to 40S at mSTOP in a single action (i.e., reinitiation).\[Default: 0\]|
+|P_smove|*v<sub>s</sub>*|Probability that a 40S moves to the next position in a single action.\[Default: 0.3\]|
+|P_pmove_u|*v<sub>Eu</sub>*|
+|P_pmove_m|*v<sub>EC</sub>*|
 |P_sdeath
 |P_edeath
 |P_clear_up
