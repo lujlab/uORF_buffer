@@ -37,42 +37,42 @@ The result file is a tab-delimited text file with 40 columns, the first column i
 |Column name (symbol in scipts)| Symbol in article|Description|
 |---|---|---|
 |sim_ID||The id of each run. Generated according to system time.|
-|Ls||Length of a 40S ribosome.\[Default: 10\]|
-|Le||Length of an 80S ribosome.\[Default: 10\]|
+|Ls||Length of a 40S ribosome. \[Default: 10\]|
+|Le||Length of an 80S ribosome. \[Default: 10\]|
 |Len_a|*Len_a*|Length before uATG. \[Default: 50\]|
-|Len_u|*Len_u*|Length between uATG and uSTOP, both ends included.\[Default: 30\]|
-|Len_b|*Len_b*|Length between uSTOP and mATG, both ends not included.\[Default: 50\]|
-|Len_m|*Len_m*|Length between mATG and mSTOP, both ends included.\[Default: 500\]|
-|Len_c|*Len_c*|Length after mSTOP.\[Default: 50\]|
-|Lambda|*R<sub>in</sub>*|Probability of 40S loading in a single action.\[Default: 0.1\]|
-|P_delay_au||Probability NOT to delay at au boundary in a single action, 1 means no delay.\[Default: 1\]|
-|P_delay_ub||Probability NOT to delay at ub boundary in a single action, 1 means no delay.\[Default: 1\]|
-|P_delay_bm||Probability NOT to delay at bm boundary in a single action, 1 means no delay.\[Default: 1\]|
-|P_delay_mc||Probability NOT to delay at mc boundary in a single action, 1 means no delay.\[Default: 1\]|
-|P_s2p_u|*I<sub>uORF</sub>*|Probability of transformation from 40S to 80S at uATG in a single action.\[Default: 0.1\]|
-|P_p2s_u||Probability of transformation from 80S to 40S at uSTOP in a single action (i.e., reinitiation).\[Default: 0\]|
-|P_s2p_m|*I<sub>CDS</sub>*|Probability of transformation from 40S to 80S at uATG in a single action.\[Default: 0.1\]|
-|P_p2s_m||Probability of transformation from 80S to 40S at mSTOP in a single action (i.e., reinitiation).\[Default: 0\]|
-|P_smove|*v<sub>s</sub>*|Probability that a 40S moves to the next position in a single action.\[Default: 0.3\]|
-|P_pmove_u|*v<sub>Eu</sub>*|
-|P_pmove_m|*v<sub>EC</sub>*|
-|P_sdeath
-|P_edeath
-|P_clear_up
-|P_clear_down
-|TTime
-|SRNA_started
-|SRNA_passed_au
-|PRNA_started_u
-|PRNA_dropped_u
-|PRNA_finished_u
-|SRNA_passed_bm
-|PRNA_started_m
-|PRNA_dropped_m
-|PRNA_finished_m
-|SRNA_dropped
-|SRNA_end
-|SRNA_kicked_upstream_u
-|SRNA_kicked_downstream_u
-|SRNA_kicked_upstream_m
-|SRNA_kicked_downstream_m
+|Len_u|*Len_u*|Length between uATG and uSTOP, both ends included. (i.e., length of uORF) \[Default: 30\]|
+|Len_b|*Len_b*|Length between uSTOP and mATG, both ends not included. \[Default: 50\]|
+|Len_m|*Len_m*|Length between mATG and mSTOP, both ends included. (i.e., length of mORF/CDS) \[Default: 500\]|
+|Len_c|*Len_c*|Length after mSTOP. \[Default: 50\]|
+|Lambda|*R<sub>in</sub>*|Probability of 40S loading in a single action. \[Default: 0.1\]|
+|P_delay_au||Probability NOT to delay at au boundary in a single action, 1 means no delay. \[Default: 1\]|
+|P_delay_ub||Probability NOT to delay at ub boundary in a single action, 1 means no delay. \[Default: 1\]|
+|P_delay_bm||Probability NOT to delay at bm boundary in a single action, 1 means no delay. \[Default: 1\]|
+|P_delay_mc||Probability NOT to delay at mc boundary in a single action, 1 means no delay. \[Default: 1\]|
+|P_s2p_u|*I<sub>uORF</sub>*|Probability of transformation from 40S to 80S at uATG in a single action. \[Default: 0.1\]|
+|P_p2s_u||Probability of transformation from 80S to 40S at uSTOP in a single action (i.e., reinitiation). \[Default: 0\]|
+|P_s2p_m|*I<sub>CDS</sub>*|Probability of transformation from 40S to 80S at mATG in a single action. \[Default: 0.1\]|
+|P_p2s_m||Probability of transformation from 80S to 40S at mSTOP in a single action (i.e., reinitiation). \[Default: 0\]|
+|P_smove|*v<sub>s</sub>*|Probability that a 40S moves to the next position in a single action. \[Default: 0.3\]|
+|P_pmove_u|*v<sub>Eu</sub>*|Probability that a 80S located in uORF moves to the next position in a single action. \[Default: 0.3\]|
+|P_pmove_m|*v<sub>EC</sub>*|Probability that a 80S loacted in mORF moves to the next position in a single action. \[Default: 0.5\]|
+|P_sdeath||Probability of spontaneous 40S dissociation in a single action.  \[Default: 0\]|
+|P_edeath||Probability of spontaneous 80S dissociation in a single action.  \[Default: 0\]|
+|P_clear_up|*K<sub>up</sub>*|Capacity of the 80S to remove the 40S in a 40S->80S collision, 0 means unable and 1 means able. \[Default: 0\]|
+|P_clear_down|*K<sub>down</sub>*|Capacity of the 80S to remove the 40S in a 80S->40S collision, 0 means unable and 1 means able. \[Default: 1\]|
+|TTime||Total number of actions in a single run of simulation. \[Default: 1000000\]|
+|SRNA_started||Total number of 40S ribosomes that have been loaded to the 5' terminus of the mRNA molecule during the given time (TTime).| 
+|SRNA_passed_au||Total number of 40S ribosomes that have reached uATG during the given time (TTime).|
+|PRNA_started_u||Total number of ribosomes that have started translation at uATG during the given time (TTime).|
+|PRNA_dropped_u||Total number of 80S ribosomes that have spontaneously dropped off in the uORF during the given time (TTime).|
+|PRNA_finished_u|*N<sub>Eu</sub>*|Total number of 80S ribosomes that have reached uSTOP and completed uORF translation during the given time (TTime).|
+|SRNA_passed_bm||Total number of 40S ribosomes that have reached mATG during the given time (TTime).|
+|PRNA_started_m||Total number of ribosomes that have started translation at mATG during the given time (TTime).|
+|PRNA_dropped_m||Total number of 80S ribosomes that have spontaneously dropped off in the mORF during the given time (TTime).|
+|PRNA_finished_m|*N<sub>EC</sub>*|Total number of 80S ribosomes that have reached mSTOP and completed mORF(i.e., CDS) translation during the given time (TTime).|
+|SRNA_dropped||Total number of 40S ribosomes that have spontaneously dropped off during the given time (TTime).|
+|SRNA_end||Total number of 40S ribosomes that have reached 3' terminus of the mRNA molecule during the given time (TTime).|
+|SRNA_kicked_upstream_u||Total number of 40S ribosomes that have been removed due to a 40S->80S collision in uORF during the given time (TTime).|
+|SRNA_kicked_downstream_u||Total number of 40S ribosomes that have been removed due to a 80S->40S collision in uORF during the given time (TTime).|
+|SRNA_kicked_upstream_m||Total number of 40S ribosomes that have been removed due to a 40S->80S collision in mORF during the given time (TTime).|
+|SRNA_kicked_downstream_m||Total number of 40S ribosomes that have been removed due to a 80S->40S collision in mORF during the given time (TTime).|
