@@ -15,12 +15,12 @@ from ICIER_extended_v8 import *
 condition_list = []
 
 with open('Lambda_input/num_runif.txt', 'r') as r_in_file:
-    r_in_lines = r_in_file.readlines()
+    r_in_lines = r_in_file.readlines()  # read the 1000 R_in values.
 
 for i in [k / 10 for k in range(0, 11)]:
     for j in [k / 10 for k in range(0, 11)]:
         for k in r_in_lines:
-            tmp = default_condition_set.copy()
+            tmp = default_condition_set.copy()  # default_condition_set has been imported from ICIER_extended_v8.py
             tmp['Lambda'] = float(k.split('\t')[1])
             tmp['P_s2p_u'] = i
             tmp['P_s2p_m'] = j
