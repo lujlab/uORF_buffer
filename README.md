@@ -51,7 +51,7 @@ The result file is a tab-delimited text file with 40 columns, the first column i
 |P_delay_mc||Probability NOT to delay at mc boundary in a single action, 1 means no delay. \[Default: 1\]|
 |P_s2p_u|*I<sub>uORF</sub>*|Probability of transformation from 40S to 80S at uATG in a single action. \[Default: 0.1\]|
 |P_p2s_u||Probability of transformation from 80S to 40S at uSTOP in a single action (i.e., reinitiation). \[Default: 0\]|
-|P_s2p_m|*I<sub>CDS</sub>*|Probability of transformation from 40S to 80S at mATG in a single action. \[Default: 0.1\]|
+|P_s2p_m|*I<sub>CDS</sub>*|Probability of transformation from 40S to 80S at mATG in a single action. \[Default: 0.9\]|
 |P_p2s_m||Probability of transformation from 80S to 40S at mSTOP in a single action (i.e., reinitiation). \[Default: 0\]|
 |P_smove|*v<sub>s</sub>*|Probability that a 40S moves to the next position in a single action. \[Default: 0.3\]|
 |P_pmove_u|*v<sub>Eu</sub>*|Probability that a 80S located in uORF moves to the next position in a single action. \[Default: 0.3\]|
