@@ -1,4 +1,8 @@
 # uORF_buffer
+This repository contains simulation-related code and data reported in our eLife paper: 
+Upstream open reading frames buffer translational variability during Drosophila evolution and development
+Yuanqiang Sun, Yuange Duan, Peixiang Gao, Chenlu Liu, Kaichun Jin, Shengqian Dou, Wenxiong Tang, Hong Zhang, Jian Lu
+eLife 2025; DOI: https://doi.org/10.7554/eLife.104074.2
 
 This repository stores the scripts used for simulation of the translation process of an mRNA molecule with one upstream ORF (uORF) and one main ORF (mORF/CDS). The model used here is based on Andreev et al.'s ICIER model [(ref)](https://elifesciences.org/articles/32563), which is distributed under GPLv3 licence at the following address: [https://github.com/maximarnold/uORF_TASEP_ICIER](https://github.com/maximarnold/uORF_TASEP_ICIER). The original model is implemented in MATLAB, and we adpated it using python. <br/>
 The basic framework of this model is totally asymmetric simple exclusion process (TASEP). Briefly, we silmulate the translation process of an mRNA molecule by a series of discrete actions, like a series of frames in a film. The mRNA molecule is represented by an array (a pyhthon list object filled with integers), and the value of each position represents the occupation status of ribosomes. In each action, certain events may happen with certain probabilities, represented by the changes of the values in the array.
